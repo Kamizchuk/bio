@@ -17,7 +17,10 @@
             box-sizing: border-box;
         }
 
+        /* --- КАСТОМНЫЙ ПИКСЕЛЬНЫЙ КУРСОР --- */
         body {
+            /* Базовый курсор (белая пиксельная стрелочка) */
+            cursor: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 0V20L6 14L12 24L16 22L10 12L18 10L0 0Z" fill="white" stroke="black" stroke-width="1"/></svg>'), auto;
             min-height: 100vh;
             background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #2a111a, #0a0a0a);
             background-size: 300% 300%;
@@ -30,13 +33,17 @@
             overflow: hidden; 
         }
 
+        /* Курсор при наведении (розовая пиксельная стрелочка) */
+        a, button, input {
+            cursor: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 0V20L6 14L12 24L16 22L10 12L18 10L0 0Z" fill="%23ff69b4" stroke="black" stroke-width="1"/></svg>'), pointer !important;
+        }
+
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* Дождь */
         #rainCanvas {
             position: fixed;
             top: 0;
@@ -47,7 +54,6 @@
             pointer-events: none;
         }
 
-        /* Главный блок с блюром */
         .container {
             position: relative;
             z-index: 10; 
@@ -74,6 +80,22 @@
             text-shadow: 2px 2px 0px rgba(255, 105, 180, 0.5);
             letter-spacing: 1px;
             animation: float 3s ease-in-out infinite;
+            user-select: none; /* Чтобы текст не выделялся при быстрых кликах */
+            transition: all 0.2s;
+        }
+
+        /* --- АНИМАЦИЯ ПАСХАЛКИ (ГЛИТЧ) --- */
+        .glitch-out {
+            animation: glitchEffect 1.2s forwards;
+        }
+
+        @keyframes glitchEffect {
+            0% { transform: translate(0) }
+            20% { transform: translate(-4px, 4px); text-shadow: 3px 0 #0ff, -3px 0 #f00; }
+            40% { transform: translate(4px, -4px); text-shadow: -3px 0 #0ff, 3px 0 #f00; opacity: 0.8; }
+            60% { transform: translate(-2px, 2px); text-shadow: 2px 0 #0ff, -2px 0 #f00; opacity: 0.5; }
+            80% { transform: translate(2px, -2px) skewX(30deg); text-shadow: none; opacity: 0.2; }
+            100% { transform: translate(0) scale(0); opacity: 0; visibility: hidden; }
         }
 
         @keyframes float {
@@ -81,7 +103,6 @@
             50% { transform: translateY(-5px); }
         }
 
-        /* Ссылки */
         .links {
             display: flex;
             flex-direction: column;
@@ -103,7 +124,11 @@
             text-decoration: none;
             font-size: 1.5rem;
             transition: all 0.3s ease;
-            cursor: pointer;
+        }
+
+        /* АНИМИРОВАННЫЕ ИКОНКИ ПРИ НАВЕДЕНИИ */
+        .link-item i {
+            transition: all 0.3s ease;
         }
 
         .link-item:hover {
@@ -113,7 +138,18 @@
             box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
         }
 
-        /* --- КАСТОМНЫЙ ПЛЕЕР (В ОДНОМ ЦВЕТЕ) --- */
+        .link-item:hover i {
+            animation: pulseIcon 0.5s ease infinite alternate;
+            color: #ff69b4;
+            text-shadow: 0 0 10px #ff69b4;
+        }
+
+        @keyframes pulseIcon {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.3) rotate(5deg); }
+        }
+
+        /* --- КАСТОМНЫЙ ПЛЕЕР --- */
         .music-box {
             display: flex;
             align-items: center;
@@ -140,7 +176,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
-            gap: 8px;
+            width: 100%;
         }
 
         .track-name {
@@ -148,6 +184,7 @@
             color: #ffb6c1; 
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
             font-weight: bold;
+            margin-bottom: 5px;
         }
 
         .controls-row {
@@ -157,13 +194,11 @@
             gap: 15px;
         }
 
-        /* Кнопка Play/Pause */
         .play-btn {
             background: none;
             border: none;
             color: #ff69b4;
             font-size: 1.5rem;
-            cursor: pointer;
             transition: transform 0.2s, color 0.2s;
             display: flex;
             align-items: center;
@@ -176,34 +211,47 @@
             transform: scale(1.1);
         }
 
-        /* Ползунок громкости */
-        .volume-slider {
+        /* --- ПОЛЗУНКИ (Прогресс и Громкость) --- */
+        .slider-common {
             -webkit-appearance: none;
-            width: 100%;
             background: transparent;
             outline: none;
         }
 
-        .volume-slider::-webkit-slider-thumb {
+        .slider-common::-webkit-slider-thumb {
             -webkit-appearance: none;
-            height: 14px;
-            width: 14px;
+            height: 12px;
+            width: 12px;
             border-radius: 50%;
             background: #ff69b4;
-            cursor: pointer;
-            margin-top: -5px;
+            margin-top: -4px;
             box-shadow: 0 0 5px rgba(255, 105, 180, 0.8);
         }
 
-        .volume-slider::-webkit-slider-runnable-track {
+        .slider-common::-webkit-slider-runnable-track {
             width: 100%;
             height: 4px;
-            cursor: pointer;
             background: rgba(255, 105, 180, 0.2);
             border-radius: 2px;
         }
 
-        /* Уведомление Discord */
+        .volume-slider { width: 100%; }
+        .progress-slider { flex-grow: 1; margin: 0 10px; }
+
+        /* Блок с таймером */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .time-text {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            min-width: 35px;
+        }
+
         #toast {
             visibility: hidden;
             min-width: 250px;
@@ -231,6 +279,8 @@
             .container { padding: 30px 20px; }
             h1 { font-size: 1.2rem; }
             .link-item { font-size: 1.3rem; padding: 12px; }
+            .music-box { flex-direction: column; }
+            .cover-art { width: 100px; height: 100px; }
         }
     </style>
 </head>
@@ -239,7 +289,8 @@
     <canvas id="rainCanvas"></canvas>
 
     <div class="container">
-        <h1>Kamizchuk</h1>
+        <!-- Заголовок с пасхалкой -->
+        <h1 id="titleName">Kamizchuk</h1>
 
         <div class="links">
             <a href="https://steamcommunity.com/id/kamizchuk/" target="_blank" class="link-item">
@@ -256,24 +307,29 @@
             </a>
         </div>
 
-        <!-- КАСТОМНЫЙ ПЛЕЕР -->
         <div class="music-box">
-            <!-- ЗДЕСЬ УКАЗАНА ТВОЯ ОБЛОЖКА: cover.jpg -->
+            <!-- Твоя обложка cover.jpg -->
             <img src="cover.jpg" alt="Cover" class="cover-art" onerror="this.src='https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=200&auto=format&fit=crop'">
             
             <div class="player-controls">
                 <div class="track-name">Cannibalism</div>
                 
                 <div class="controls-row">
-                    <!-- Кнопка Play/Pause -->
                     <button class="play-btn" id="playBtn">
                         <i class="fas fa-play"></i>
                     </button>
-                    <!-- Ползунок громкости -->
-                    <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
+                    <!-- Иконка звука и ползунок громкости -->
+                    <i class="fas fa-volume-up" style="color: #ff69b4; font-size: 0.8rem;"></i>
+                    <input type="range" class="slider-common volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
                 </div>
 
-                <!-- Невидимый элемент аудио -->
+                <!-- Новый блок: Таймер и Прогресс-бар -->
+                <div class="progress-container">
+                    <span id="currentTime" class="time-text">0:00</span>
+                    <input type="range" class="slider-common progress-slider" id="progressSlider" min="0" max="100" value="0">
+                    <span id="durationTime" class="time-text">0:00</span>
+                </div>
+
                 <audio id="audioElement">
                     <source src="cannibalism.mp3" type="audio/mpeg">
                 </audio>
@@ -284,15 +340,71 @@
     <div id="toast">Юзернейм скопирован!</div>
 
     <script>
-        // --- Логика Кастомного Плеера ---
+        // --- ПАСХАЛКА (10 КЛИКОВ) ---
+        const title = document.getElementById('titleName');
+        let clickCount = 0;
+
+        title.addEventListener('click', () => {
+            clickCount++;
+            // Немного дергаем текст при каждом клике для эффекта
+            title.style.transform = `scale(${1 + clickCount * 0.02}) rotate(${Math.random() * 4 - 2}deg)`;
+            
+            if (clickCount >= 10) {
+                title.classList.add('glitch-out');
+                // Сбрасываем счетчик, но текст уже пропадет
+                clickCount = 0; 
+            }
+            
+            // Возвращаем в исходное положение после клика, если не взорвалось
+            if(!title.classList.contains('glitch-out')) {
+                setTimeout(() => {
+                    title.style.transform = 'scale(1) rotate(0deg)';
+                }, 150);
+            }
+        });
+
+        // --- ЛОГИКА ПЛЕЕРА ---
         const audio = document.getElementById('audioElement');
         const playBtn = document.getElementById('playBtn');
         const volumeSlider = document.getElementById('volumeSlider');
+        const progressSlider = document.getElementById('progressSlider');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationTimeEl = document.getElementById('durationTime');
 
-        // Громкость по умолчанию на 50%
         audio.volume = volumeSlider.value;
 
-        // Включение / Пауза
+        // Форматирование времени (секунды в мин:сек)
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return "0:00";
+            const m = Math.floor(seconds / 60);
+            const s = Math.floor(seconds % 60);
+            return m + ':' + (s < 10 ? '0' : '') + s;
+        }
+
+        // Загрузка длительности трека
+        audio.addEventListener('loadedmetadata', () => {
+            durationTimeEl.textContent = formatTime(audio.duration);
+            progressSlider.max = audio.duration;
+        });
+
+        // Обновление таймера и ползунка во время воспроизведения
+        audio.addEventListener('timeupdate', () => {
+            currentTimeEl.textContent = formatTime(audio.currentTime);
+            progressSlider.value = audio.currentTime;
+            
+            // Заглушка, если метаданные не загрузились сразу
+            if(durationTimeEl.textContent === "0:00" && !isNaN(audio.duration)) {
+                durationTimeEl.textContent = formatTime(audio.duration);
+                progressSlider.max = audio.duration;
+            }
+        });
+
+        // Перемотка песни ползунком
+        progressSlider.addEventListener('input', () => {
+            audio.currentTime = progressSlider.value;
+        });
+
+        // Воспроизведение / Пауза
         playBtn.addEventListener('click', () => {
             if (audio.paused) {
                 audio.play();
@@ -301,79 +413,49 @@
             }
         });
 
-        // Смена иконки при воспроизведении
-        audio.addEventListener('play', () => {
-            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-        });
-
-        // Смена иконки при паузе
-        audio.addEventListener('pause', () => {
+        audio.addEventListener('play', () => { playBtn.innerHTML = '<i class="fas fa-pause"></i>'; });
+        audio.addEventListener('pause', () => { playBtn.innerHTML = '<i class="fas fa-play"></i>'; });
+        audio.addEventListener('ended', () => { 
             playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            audio.currentTime = 0;
         });
 
-        // Когда песня заканчивается, возвращаем иконку Play
-        audio.addEventListener('ended', () => {
-            playBtn.innerHTML = '<i class="fas fa-play"></i>';
-        });
+        volumeSlider.addEventListener('input', (e) => { audio.volume = e.target.value; });
 
-        // Изменение громкости ползунком
-        volumeSlider.addEventListener('input', (e) => {
-            audio.volume = e.target.value;
-        });
-
-
-        // --- Копирование Discord ---
+        // --- DISCORD ---
         function copyDiscord(e) {
             e.preventDefault();
             navigator.clipboard.writeText("kamizchuk").then(function() {
                 var toast = document.getElementById("toast");
                 toast.className = "show";
-                setTimeout(function(){ 
-                    toast.className = toast.className.replace("show", ""); 
-                }, 3000);
-            }).catch(function(err) {
-                console.error('Ошибка копирования: ', err);
-            });
+                setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+            }).catch(err => console.error('Ошибка:', err));
         }
 
-        // --- Эффект дождя ---
+        // --- ДОЖДЬ ---
         const canvas = document.getElementById('rainCanvas');
         const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
         const drops = [];
         for(let i = 0; i < 120; i++) {
             drops.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                length: Math.random() * 15 + 10,
-                speed: Math.random() * 4 + 2
+                x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+                length: Math.random() * 15 + 10, speed: Math.random() * 4 + 2
             });
         }
-
         function drawRain() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.strokeStyle = 'rgba(255, 105, 180, 0.35)';
-            ctx.lineWidth = 1.5;
-            ctx.lineCap = 'round';
+            ctx.lineWidth = 1.5; ctx.lineCap = 'round';
             ctx.beginPath();
-            
             for(let i = 0; i < drops.length; i++) {
                 let d = drops[i];
-                ctx.moveTo(d.x, d.y);
-                ctx.lineTo(d.x, d.y + d.length);
+                ctx.moveTo(d.x, d.y); ctx.lineTo(d.x, d.y + d.length);
                 d.y += d.speed;
-                
-                if(d.y > canvas.height) {
-                    d.y = -d.length;
-                    d.x = Math.random() * canvas.width;
-                }
+                if(d.y > canvas.height) { d.y = -d.length; d.x = Math.random() * canvas.width; }
             }
             ctx.stroke();
             requestAnimationFrame(drawRain);
