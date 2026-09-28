@@ -36,6 +36,7 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* Дождь */
         #rainCanvas {
             position: fixed;
             top: 0;
@@ -46,6 +47,7 @@
             pointer-events: none;
         }
 
+        /* Главный блок с блюром */
         .container {
             position: relative;
             z-index: 10; 
@@ -79,6 +81,7 @@
             50% { transform: translateY(-5px); }
         }
 
+        /* Ссылки */
         .links {
             display: flex;
             flex-direction: column;
@@ -110,16 +113,16 @@
             box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
         }
 
-        /* --- КАСТОМНЫЙ ПЛЕЕР --- */
+        /* --- КАСТОМНЫЙ ПЛЕЕР (В ОДНОМ ЦВЕТЕ) --- */
         .music-box {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
             width: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px 20px;
             border-radius: 16px;
-            border: 1px solid rgba(255, 105, 180, 0.2);
+            border: 1px solid rgba(255, 105, 180, 0.3);
         }
 
         .cover-art {
@@ -128,38 +131,79 @@
             border-radius: 10px;
             object-fit: cover;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 105, 180, 0.3);
+            border: 1px solid rgba(255, 105, 180, 0.4);
         }
 
-        .player-wrapper {
+        .player-controls {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
+            gap: 8px;
         }
 
         .track-name {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
+            font-size: 1.2rem;
             color: #ffb6c1; 
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            font-weight: bold;
         }
 
-        audio {
+        .controls-row {
+            display: flex;
+            align-items: center;
             width: 100%;
-            height: 30px;
-            outline: none;
+            gap: 15px;
+        }
+
+        /* Кнопка Play/Pause */
+        .play-btn {
+            background: none;
+            border: none;
+            color: #ff69b4;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
         }
         
-        audio::-webkit-media-controls-panel {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        audio::-webkit-media-controls-current-time-display,
-        audio::-webkit-media-controls-time-remaining-display {
-            color: #fff;
+        .play-btn:hover {
+            color: #ffb6c1;
+            transform: scale(1.1);
         }
 
+        /* Ползунок громкости */
+        .volume-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 14px;
+            width: 14px;
+            border-radius: 50%;
+            background: #ff69b4;
+            cursor: pointer;
+            margin-top: -5px;
+            box-shadow: 0 0 5px rgba(255, 105, 180, 0.8);
+        }
+
+        .volume-slider::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255, 105, 180, 0.2);
+            border-radius: 2px;
+        }
+
+        /* Уведомление Discord */
         #toast {
             visibility: hidden;
             min-width: 250px;
@@ -214,14 +258,23 @@
 
         <!-- КАСТОМНЫЙ ПЛЕЕР -->
         <div class="music-box">
-            <!-- Эту картинку ты можешь поменять на свою обложку, просто вставив ссылку на неё -->
-            <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=200&auto=format&fit=crop" alt="Cover" class="cover-art">
+            <!-- ЗДЕСЬ УКАЗАНА ТВОЯ ОБЛОЖКА: cover.jpg -->
+            <img src="cover.jpg" alt="Cover" class="cover-art" onerror="this.src='https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=200&auto=format&fit=crop'">
             
-            <div class="player-wrapper">
-                <!-- Название твоей песни -->
+            <div class="player-controls">
                 <div class="track-name">Cannibalism</div>
-                <audio controls>
-                    <!-- Подключаем твой файл -->
+                
+                <div class="controls-row">
+                    <!-- Кнопка Play/Pause -->
+                    <button class="play-btn" id="playBtn">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <!-- Ползунок громкости -->
+                    <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
+                </div>
+
+                <!-- Невидимый элемент аудио -->
+                <audio id="audioElement">
                     <source src="cannibalism.mp3" type="audio/mpeg">
                 </audio>
             </div>
@@ -231,7 +284,45 @@
     <div id="toast">Юзернейм скопирован!</div>
 
     <script>
-        // Копирование Discord
+        // --- Логика Кастомного Плеера ---
+        const audio = document.getElementById('audioElement');
+        const playBtn = document.getElementById('playBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+
+        // Громкость по умолчанию на 50%
+        audio.volume = volumeSlider.value;
+
+        // Включение / Пауза
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        });
+
+        // Смена иконки при воспроизведении
+        audio.addEventListener('play', () => {
+            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        });
+
+        // Смена иконки при паузе
+        audio.addEventListener('pause', () => {
+            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        });
+
+        // Когда песня заканчивается, возвращаем иконку Play
+        audio.addEventListener('ended', () => {
+            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        });
+
+        // Изменение громкости ползунком
+        volumeSlider.addEventListener('input', (e) => {
+            audio.volume = e.target.value;
+        });
+
+
+        // --- Копирование Discord ---
         function copyDiscord(e) {
             e.preventDefault();
             navigator.clipboard.writeText("kamizchuk").then(function() {
@@ -245,7 +336,7 @@
             });
         }
 
-        // Эффект дождя
+        // --- Эффект дождя ---
         const canvas = document.getElementById('rainCanvas');
         const ctx = canvas.getContext('2d');
 
