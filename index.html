@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -5,20 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kamizchuk</title>
     
-    <!-- Подключение пиксельных шрифтов -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-    <!-- Подключение иконок FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Сброс базовых отступов */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Тёмная тема с анимированным градиентом (перелив в розовый) */
+        /* Тёмная тема с анимированным градиентом */
         body {
             min-height: 100vh;
             background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #2a111a, #0a0a0a);
@@ -28,33 +26,53 @@
             justify-content: center;
             align-items: center;
             color: #fff;
-            font-family: 'VT323', monospace; /* Пиксельный шрифт для текста */
+            font-family: 'VT323', monospace;
+            overflow: hidden; /* Чтобы не было скролла из-за дождя */
         }
 
-        /* Анимация переливания фона */
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* Контейнер по центру */
+        /* Холст для дождя на заднем фоне */
+        #rainCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Позади всего контента */
+            pointer-events: none;
+        }
+
+        /* Контейнер с ЗАДНИМ БЛЮРОМ (Glassmorphism) */
         .container {
+            position: relative;
+            z-index: 10; /* Поверх дождя */
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 90%;
-            max-width: 400px;
+            max-width: 420px;
+            padding: 40px 25px;
             text-align: center;
-            padding: 20px 0;
+            
+            /* Эффект матового стекла */
+            background: rgba(20, 10, 15, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px); /* Для iPhone/Safari */
+            border: 1px solid rgba(255, 105, 180, 0.25);
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
 
-        /* Заголовок Kamizchuk */
         h1 {
-            font-family: 'Press Start 2P', cursive; /* Самый пиксельный шрифт для заголовка */
-            font-size: 1.5rem;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.4rem;
             margin-bottom: 30px;
-            text-shadow: 2px 2px 0px rgba(255, 105, 180, 0.5); /* Нежно-розовая тень */
+            text-shadow: 2px 2px 0px rgba(255, 105, 180, 0.5);
             letter-spacing: 1px;
             animation: float 3s ease-in-out infinite;
         }
@@ -64,13 +82,12 @@
             50% { transform: translateY(-5px); }
         }
 
-        /* Ссылки */
         .links {
             display: flex;
             flex-direction: column;
             width: 100%;
             gap: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .link-item {
@@ -80,58 +97,63 @@
             gap: 12px;
             padding: 15px;
             background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 105, 180, 0.2);
+            border: 1px solid rgba(255, 105, 180, 0.3);
             border-radius: 12px;
             color: #fff;
             text-decoration: none;
             font-size: 1.5rem;
             transition: all 0.3s ease;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(5px);
         }
 
         .link-item:hover {
-            background: rgba(255, 105, 180, 0.15); /* Подсветка розовым при наведении */
+            background: rgba(255, 105, 180, 0.15);
             border-color: rgba(255, 105, 180, 0.8);
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
         }
 
-        .link-item i {
-            font-size: 1.5rem;
-        }
-
-        /* Мини-плеер Яндекс */
-        .player {
+        /* Блок музыки: обложка + плеер */
+        .music-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
             width: 100%;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(255, 105, 180, 0.2);
-            transition: border-color 0.3s ease;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 105, 180, 0.2);
         }
 
-        .player:hover {
-            border-color: rgba(255, 105, 180, 0.6);
+        .cover-art {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 105, 180, 0.3);
         }
 
-        /* Уведомление о копировании */
+        .player-wrapper {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+
         #toast {
             visibility: hidden;
             min-width: 250px;
-            background-color: #333;
+            background-color: #222;
             color: #fff;
             text-align: center;
             border-radius: 8px;
             padding: 12px;
             position: fixed;
-            z-index: 1;
+            z-index: 100;
             bottom: 30px;
             font-size: 1.2rem;
             border: 1px solid #ff69b4;
-            box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
             opacity: 0;
             transition: opacity 0.5s, visibility 0.5s;
         }
@@ -143,18 +165,32 @@
 
         /* Адаптивность для телефонов */
         @media (max-width: 480px) {
+            .container { padding: 30px 20px; }
             h1 { font-size: 1.2rem; }
             .link-item { font-size: 1.3rem; padding: 12px; }
+            
+            /* На телефоне обложка будет сверху плеера для красоты */
+            .music-box {
+                flex-direction: column;
+                padding: 20px;
+            }
+            .cover-art {
+                width: 120px;
+                height: 120px;
+            }
+            .player-wrapper {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
 
+    <canvas id="rainCanvas"></canvas>
+
     <div class="container">
-        <!-- Заголовок -->
         <h1>Kamizchuk</h1>
 
-        <!-- Блок со ссылками -->
         <div class="links">
             <a href="https://steamcommunity.com/id/kamizchuk/" target="_blank" class="link-item">
                 <i class="fab fa-steam"></i> Steam
@@ -165,33 +201,29 @@
             <a href="https://youtube.com/@kamizchuk?si=OacBrP33uK_nkmfv" target="_blank" class="link-item">
                 <i class="fab fa-youtube"></i> YouTube
             </a>
-            <!-- Ссылка Discord с копированием юзернейма -->
             <a href="#" onclick="copyDiscord(event)" class="link-item">
                 <i class="fab fa-discord"></i> Discord
             </a>
         </div>
 
-        <!-- Минималистичный проигрыватель Яндекс Музыки -->
-        <div class="player">
-            <iframe frameborder="0" style="border:none;width:100%;height:100px;" width="100%" height="100" src="https://music.yandex.ru/iframe/track/153663563/43069960"></iframe>
+        <div class="music-box">
+            <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=200&auto=format&fit=crop" alt="Cover" class="cover-art">
+            
+            <div class="player-wrapper">
+                <iframe frameborder="0" style="border:none;width:100%;height:100px;" width="100%" height="100" src="https://music.yandex.ru/iframe/track/153663563/43069960"></iframe>
+            </div>
         </div>
     </div>
 
-    <!-- Всплывающее окно для Discord -->
     <div id="toast">Юзернейм скопирован!</div>
 
     <script>
-        // Скрипт для копирования Discord никнейма
+        // --- Скрипт для копирования Discord ---
         function copyDiscord(e) {
-            e.preventDefault(); // Отменяем переход по ссылке
-            
-            // Копируем никнейм в буфер обмена
+            e.preventDefault();
             navigator.clipboard.writeText("kamizchuk").then(function() {
-                // Показываем уведомление
                 var toast = document.getElementById("toast");
                 toast.className = "show";
-                
-                // Прячем уведомление через 3 секунды
                 setTimeout(function(){ 
                     toast.className = toast.className.replace("show", ""); 
                 }, 3000);
@@ -199,6 +231,53 @@
                 console.error('Ошибка копирования: ', err);
             });
         }
+
+        // --- Скрипт для эффекта дождя ---
+        const canvas = document.getElementById('rainCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const drops = [];
+        // Количество капель (120 - оптимально)
+        for(let i = 0; i < 120; i++) {
+            drops.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                length: Math.random() * 15 + 10,
+                speed: Math.random() * 4 + 2
+            });
+        }
+
+        function drawRain() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Цвет дождя: нежно-розовый полупрозрачный
+            ctx.strokeStyle = 'rgba(255, 105, 180, 0.35)';
+            ctx.lineWidth = 1.5;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            
+            for(let i = 0; i < drops.length; i++) {
+                let d = drops[i];
+                ctx.moveTo(d.x, d.y);
+                ctx.lineTo(d.x, d.y + d.length);
+                d.y += d.speed;
+                
+                // Если капля упала за экран, возвращаем наверх
+                if(d.y > canvas.height) {
+                    d.y = -d.length;
+                    d.x = Math.random() * canvas.width;
+                }
+            }
+            ctx.stroke();
+            requestAnimationFrame(drawRain);
+        }
+        drawRain();
     </script>
 </body>
 </html>
