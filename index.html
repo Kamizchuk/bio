@@ -1,1 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kamizchuk</title>
+    
+    <!-- Подключение пиксельных шрифтов -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <!-- Подключение иконок FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Сброс базовых отступов */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        /* Тёмная тема с анимированным градиентом (перелив в розовый) */
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #2a111a, #0a0a0a);
+            background-size: 300% 300%;
+            animation: gradientShift 10s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-family: 'VT323', monospace; /* Пиксельный шрифт для текста */
+        }
+
+        /* Анимация переливания фона */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Контейнер по центру */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        /* Заголовок Kamizchuk */
+        h1 {
+            font-family: 'Press Start 2P', cursive; /* Самый пиксельный шрифт для заголовка */
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 0px rgba(255, 105, 180, 0.5); /* Нежно-розовая тень */
+            letter-spacing: 1px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Ссылки */
+        .links {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .link-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 105, 180, 0.2);
+            border-radius: 12px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .link-item:hover {
+            background: rgba(255, 105, 180, 0.15); /* Подсветка розовым при наведении */
+            border-color: rgba(255, 105, 180, 0.8);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
+        }
+
+        .link-item i {
+            font-size: 1.5rem;
+        }
+
+        /* Мини-плеер Яндекс */
+        .player {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 105, 180, 0.2);
+            transition: border-color 0.3s ease;
+        }
+
+        .player:hover {
+            border-color: rgba(255, 105, 180, 0.6);
+        }
+
+        /* Уведомление о копировании */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 12px;
+            position: fixed;
+            z-index: 1;
+            bottom: 30px;
+            font-size: 1.2rem;
+            border: 1px solid #ff69b4;
+            box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+            opacity: 0;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Адаптивность для телефонов */
+        @media (max-width: 480px) {
+            h1 { font-size: 1.2rem; }
+            .link-item { font-size: 1.3rem; padding: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Заголовок -->
+        <h1>Kamizchuk</h1>
+
+        <!-- Блок со ссылками -->
+        <div class="links">
+            <a href="https://steamcommunity.com/id/kamizchuk/" target="_blank" class="link-item">
+                <i class="fab fa-steam"></i> Steam
+            </a>
+            <a href="https://t.me/kamizchuk" target="_blank" class="link-item">
+                <i class="fab fa-telegram"></i> Telegram
+            </a>
+            <a href="https://youtube.com/@kamizchuk?si=OacBrP33uK_nkmfv" target="_blank" class="link-item">
+                <i class="fab fa-youtube"></i> YouTube
+            </a>
+            <!-- Ссылка Discord с копированием юзернейма -->
+            <a href="#" onclick="copyDiscord(event)" class="link-item">
+                <i class="fab fa-discord"></i> Discord
+            </a>
+        </div>
+
+        <!-- Минималистичный проигрыватель Яндекс Музыки -->
+        <div class="player">
+            <iframe frameborder="0" style="border:none;width:100%;height:100px;" width="100%" height="100" src="https://music.yandex.ru/iframe/track/153663563/43069960"></iframe>
+        </div>
+    </div>
+
+    <!-- Всплывающее окно для Discord -->
+    <div id="toast">Юзернейм скопирован!</div>
+
+    <script>
+        // Скрипт для копирования Discord никнейма
+        function copyDiscord(e) {
+            e.preventDefault(); // Отменяем переход по ссылке
+            
+            // Копируем никнейм в буфер обмена
+            navigator.clipboard.writeText("kamizchuk").then(function() {
+                // Показываем уведомление
+                var toast = document.getElementById("toast");
+                toast.className = "show";
+                
+                // Прячем уведомление через 3 секунды
+                setTimeout(function(){ 
+                    toast.className = toast.className.replace("show", ""); 
+                }, 3000);
+            }).catch(function(err) {
+                console.error('Ошибка копирования: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
