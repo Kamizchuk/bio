@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kamizchuk</title>
     
-    <!-- Подключение пиксельных шрифтов (Добавлен Pixelify Sans для таймера) -->
-    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <!-- Подключение пиксельных шрифтов: Press Start 2P, VT323 и Silkscreen для таймера -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet">
     <!-- Подключение иконок FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -17,9 +17,9 @@
             box-sizing: border-box;
         }
 
-        /* --- КАСТОМНЫЙ ПИКСЕЛЬНЫЙ КУРСОР --- */
+        /* --- МИНИМАЛИСТИЧНЫЙ ПИКСЕЛЬНЫЙ КУРСОР --- */
         body {
-            cursor: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 0V20L6 14L12 24L16 22L10 12L18 10L0 0Z" fill="white" stroke="black" stroke-width="1"/></svg>'), auto;
+            cursor: url('data:image/svg+xml;utf8,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H2V2H4V4H6V6H8V8H10V10H6V12H4V14H2V16H0V0Z" fill="white"/><path d="M2 2H0V14H2V12H4V10H6V8H8V6H6V4H4V2H2Z" fill="black"/></svg>'), auto;
             min-height: 100vh;
             background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #2a111a, #0a0a0a);
             background-size: 300% 300%;
@@ -32,8 +32,9 @@
             overflow: hidden; 
         }
 
+        /* Курсор при наведении (акцентный неоново-розовый) */
         a, button, input {
-            cursor: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 0V20L6 14L12 24L16 22L10 12L18 10L0 0Z" fill="%23ff69b4" stroke="black" stroke-width="1"/></svg>'), pointer !important;
+            cursor: url('data:image/svg+xml;utf8,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H2V2H4V4H6V6H8V8H10V10H6V12H4V14H2V16H0V0Z" fill="%23ff69b4"/><path d="M2 2H0V14H2V12H4V10H6V8H8V6H6V4H4V2H2Z" fill="black"/></svg>'), pointer !important;
         }
 
         @keyframes gradientShift {
@@ -82,7 +83,7 @@
             transition: all 0.2s;
         }
 
-        /* --- АНИМАЦИЯ ИСЧЕЗНОВЕНИЯ (ГЛИТЧ) --- */
+        /* --- ГЛИТЧ ПАСХАЛКИ --- */
         .glitch-out {
             animation: glitchOutEffect 1s forwards;
         }
@@ -95,7 +96,6 @@
             100% { transform: translate(0) scale(0); opacity: 0; visibility: hidden; }
         }
 
-        /* --- АНИМАЦИЯ ПОЯВЛЕНИЯ (ВОЗВРАТ) --- */
         .glitch-in {
             animation: glitchInEffect 0.8s forwards;
         }
@@ -111,6 +111,7 @@
             50% { transform: translateY(-5px); }
         }
 
+        /* --- ССЫЛКИ --- */
         .links {
             display: flex;
             flex-direction: column;
@@ -154,25 +155,26 @@
             100% { transform: scale(1.3) rotate(5deg); }
         }
 
-        /* --- ПЛЕЕР --- */
+        /* --- МЕДИАПЛЕЕР --- */
         .music-box {
             display: flex;
             align-items: center;
             gap: 15px;
             width: 100%;
             background: rgba(0, 0, 0, 0.4);
-            padding: 15px 20px;
+            padding: 14px 18px;
             border-radius: 16px;
             border: 1px solid rgba(255, 105, 180, 0.3);
         }
 
         .cover-art {
-            width: 65px;
-            height: 65px;
+            width: 68px;
+            height: 68px;
             border-radius: 10px;
             object-fit: cover;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 105, 180, 0.4);
+            flex-shrink: 0;
         }
 
         .player-controls {
@@ -180,7 +182,8 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            width: 100%;
+            width: calc(100% - 83px);
+            gap: 6px;
         }
 
         .track-name {
@@ -188,26 +191,65 @@
             color: #ffb6c1; 
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
             font-weight: bold;
-            margin-bottom: 8px;
+            text-align: left;
+            line-height: 1.1;
         }
 
-        .controls-row {
+        /* Общие стили ползунков */
+        .slider-common {
+            -webkit-appearance: none;
+            background: transparent;
+            outline: none;
+        }
+
+        .slider-common::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 10px;
+            width: 10px;
+            border-radius: 2px; /* Пиксельная форма бегунка */
+            background: #ff69b4;
+            margin-top: -3.5px;
+            box-shadow: 0 0 5px rgba(255, 105, 180, 0.9);
+            cursor: pointer;
+        }
+
+        .slider-common::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 105, 180, 0.25);
+            border-radius: 1px;
+            cursor: pointer;
+        }
+
+        /* Прогресс песни */
+        .progress-slider {
+            width: 100%;
+        }
+
+        .bottom-controls {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             width: 100%;
-            gap: 12px;
+            gap: 8px;
+        }
+
+        .left-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .play-btn {
             background: none;
             border: none;
             color: #ff69b4;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             transition: transform 0.2s, color 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 25px;
+            width: 20px;
         }
         
         .play-btn:hover {
@@ -215,43 +257,34 @@
             transform: scale(1.1);
         }
 
-        /* Прогресс-бар */
-        .slider-common {
-            -webkit-appearance: none;
-            background: transparent;
-            outline: none;
-            flex-grow: 1;
-        }
-
-        .slider-common::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 12px;
-            width: 12px;
-            border-radius: 50%;
-            background: #ff69b4;
-            margin-top: -4px;
-            box-shadow: 0 0 5px rgba(255, 105, 180, 0.8);
-            cursor: pointer;
-        }
-
-        .slider-common::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 105, 180, 0.3);
-            border-radius: 2px;
-            cursor: pointer;
-        }
-
-        /* Новый таймер справа */
+        /* Таймер с новым ретро-пиксельным шрифтом Silkscreen */
         .time-text {
-            font-family: 'Pixelify Sans', sans-serif; /* Тот самый новый пиксельный шрифт */
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.8);
-            min-width: 70px;
-            text-align: right;
-            letter-spacing: 1px;
+            font-family: 'Silkscreen', monospace;
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.85);
+            letter-spacing: 0.5px;
+            white-space: nowrap;
         }
 
+        /* Блок громкости */
+        .volume-box {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            width: 70px;
+            flex-shrink: 0;
+        }
+
+        .volume-box i {
+            color: #ff69b4;
+            font-size: 0.75rem;
+        }
+
+        .volume-slider {
+            width: 100%;
+        }
+
+        /* Всплывающее окно */
         #toast {
             visibility: hidden;
             min-width: 250px;
@@ -277,7 +310,8 @@
             h1 { font-size: 1.2rem; }
             .link-item { font-size: 1.3rem; padding: 12px; }
             .music-box { flex-direction: column; }
-            .cover-art { width: 90px; height: 90px; }
+            .player-controls { width: 100%; }
+            .cover-art { width: 85px; height: 85px; }
         }
     </style>
 </head>
@@ -286,7 +320,7 @@
     <canvas id="rainCanvas"></canvas>
 
     <div class="container">
-        <!-- Заголовок с пасхалкой -->
+        <!-- Заголовок с пасхалкой (10 кликов) -->
         <h1 id="titleName">Kamizchuk</h1>
 
         <div class="links">
@@ -304,25 +338,33 @@
             </a>
         </div>
 
+        <!-- Медиаплеер -->
         <div class="music-box">
-            <!-- Твоя обложка cover.jpg -->
+            <!-- Обложка трека -->
             <img src="cover.jpg" alt="Cover" class="cover-art" onerror="this.src='https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=200&auto=format&fit=crop'">
             
             <div class="player-controls">
                 <div class="track-name">Cannibalism</div>
                 
-                <div class="controls-row">
-                    <!-- Кнопка Play -->
-                    <button class="play-btn" id="playBtn">
-                        <i class="fas fa-play"></i>
-                    </button>
+                <!-- Верхняя полоса: прогресс песни -->
+                <input type="range" class="slider-common progress-slider" id="progressSlider" min="0" max="100" value="0">
+                
+                <!-- Нижняя панель: Play/Pause, таймер и ползунок громкости -->
+                <div class="bottom-controls">
+                    <div class="left-controls">
+                        <button class="play-btn" id="playBtn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <!-- Цифровой таймер шрифтом Silkscreen -->
+                        <div class="time-text">
+                            <span id="currentTime">00:00</span>/<span id="durationTime">00:00</span>
+                        </div>
+                    </div>
                     
-                    <!-- Прогресс бар (сразу за кнопкой) -->
-                    <input type="range" class="slider-common" id="progressSlider" min="0" max="100" value="0">
-                    
-                    <!-- Таймер с новым шрифтом (справа) -->
-                    <div class="time-text">
-                        <span id="currentTime">0:00</span>/<span id="durationTime">0:00</span>
+                    <!-- Ползунок громкости -->
+                    <div class="volume-box">
+                        <i class="fas fa-volume-up"></i>
+                        <input type="range" class="slider-common volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
                     </div>
                 </div>
 
@@ -336,33 +378,27 @@
     <div id="toast">Юзернейм скопирован!</div>
 
     <script>
-        // --- ПАСХАЛКА (Исчезновение и Возвращение) ---
+        // --- ПАСХАЛКА (Исчезновение и Возврат через 3 секунды) ---
         const title = document.getElementById('titleName');
         let clickCount = 0;
 
         title.addEventListener('click', () => {
-            // Если надпись сейчас исчезла, игнорируем клики
             if (title.classList.contains('glitch-out')) return;
 
             clickCount++;
-            
-            // Сбрасываем анимацию появления, если кликаем снова
             title.classList.remove('glitch-in');
-            
             title.style.transform = `scale(${1 + clickCount * 0.02}) rotate(${Math.random() * 4 - 2}deg)`;
             
             if (clickCount >= 10) {
                 title.classList.add('glitch-out');
                 clickCount = 0; 
                 
-                // Возвращаем надпись через 3 секунды
                 setTimeout(() => {
                     title.classList.remove('glitch-out');
-                    title.classList.add('glitch-in'); // Запускаем глитч появления
+                    title.classList.add('glitch-in');
                 }, 3000);
             }
             
-            // Возвращаем на место после обычного клика
             if(!title.classList.contains('glitch-out')) {
                 setTimeout(() => {
                     if(!title.classList.contains('glitch-in')){
@@ -372,47 +408,46 @@
             }
         });
 
-        // --- ЛОГИКА ПЛЕЕРА ---
+        // --- ЛОГИКА МЕДИАПЛЕЕРА ---
         const audio = document.getElementById('audioElement');
         const playBtn = document.getElementById('playBtn');
         const progressSlider = document.getElementById('progressSlider');
+        const volumeSlider = document.getElementById('volumeSlider');
         const currentTimeEl = document.getElementById('currentTime');
         const durationTimeEl = document.getElementById('durationTime');
 
-        // Громкость теперь по умолчанию 50% (так как убрали ползунок)
-        audio.volume = 0.5;
+        audio.volume = volumeSlider.value;
 
-        // Форматирование времени
         function formatTime(seconds) {
-            if (isNaN(seconds)) return "0:00";
+            if (isNaN(seconds)) return "00:00";
             const m = Math.floor(seconds / 60);
             const s = Math.floor(seconds % 60);
-            return m + ':' + (s < 10 ? '0' : '') + s;
+            return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
         }
 
-        // Длительность при загрузке
         audio.addEventListener('loadedmetadata', () => {
             durationTimeEl.textContent = formatTime(audio.duration);
             progressSlider.max = audio.duration;
         });
 
-        // Обновление ползунка и таймера при проигрывании
         audio.addEventListener('timeupdate', () => {
             currentTimeEl.textContent = formatTime(audio.currentTime);
             progressSlider.value = audio.currentTime;
             
-            if(durationTimeEl.textContent === "0:00" && !isNaN(audio.duration)) {
+            if((durationTimeEl.textContent === "00:00" || durationTimeEl.textContent === "0:00") && !isNaN(audio.duration)) {
                 durationTimeEl.textContent = formatTime(audio.duration);
                 progressSlider.max = audio.duration;
             }
         });
 
-        // Перемотка
         progressSlider.addEventListener('input', () => {
             audio.currentTime = progressSlider.value;
         });
 
-        // Кнопка Play/Pause
+        volumeSlider.addEventListener('input', (e) => {
+            audio.volume = e.target.value;
+        });
+
         playBtn.addEventListener('click', () => {
             if (audio.paused) {
                 audio.play();
@@ -428,7 +463,7 @@
             audio.currentTime = 0;
         });
 
-        // --- DISCORD ---
+        // --- ДИСКОРД ---
         function copyDiscord(e) {
             e.preventDefault();
             navigator.clipboard.writeText("kamizchuk").then(function() {
