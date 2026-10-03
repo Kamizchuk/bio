@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kamizu</title>
     
-    <!-- Подключение готического шрифта MedievalSharp (вытянутый, строгий, буква k четкая) и Cinzel -->
+    <!-- Подключение шрифтов: MedievalSharp и Cinzel -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=MedievalSharp&display=swap" rel="stylesheet">
@@ -24,6 +24,7 @@
             --bg-color: #040407;
             --text-main: #f5f5f7;
             --text-dim: #8b8b96;
+            --ease-liquid: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         body {
@@ -46,7 +47,6 @@
             position: relative;
         }
 
-        /* Тонкая ретро-вуаль */
         body::before {
             content: " ";
             position: fixed;
@@ -71,7 +71,7 @@
             pointer-events: none;
         }
 
-        /* --- ЭКРАН ВХОДА (Apple Liquid / Glassmorphism) --- */
+        /* --- ЭКРАН ВХОДА --- */
         .enter-screen {
             position: fixed;
             top: 0;
@@ -82,10 +82,10 @@
             justify-content: center;
             align-items: center;
             z-index: 50;
-            background: rgba(4, 4, 7, 0.35);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), visibility 1s ease;
+            background: rgba(4, 4, 7, 0.4);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            transition: opacity 0.8s var(--ease-liquid), visibility 0.8s ease;
             user-select: none;
         }
 
@@ -110,7 +110,12 @@
             backdrop-filter: blur(30px) saturate(200%);
             -webkit-backdrop-filter: blur(30px) saturate(200%);
             animation: pulseGlass 3.2s infinite ease-in-out;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.6s var(--ease-liquid), opacity 0.6s var(--ease-liquid);
+        }
+
+        .enter-screen.hidden .enter-trigger {
+            transform: scale(1.15);
+            opacity: 0;
         }
 
         .enter-trigger:hover {
@@ -151,7 +156,7 @@
             50% { transform: scale(1.02); }
         }
 
-        /* --- КАРТОЧКА: APPLE LIQUID GLASS (Жидкое стекло с эффектом желе) --- */
+        /* --- ОСНОВНАЯ КАРТОЧКА --- */
         .container {
             position: relative;
             z-index: 10; 
@@ -163,13 +168,11 @@
             padding: 44px 30px;
             border-radius: 36px;
             
-            /* Прозрачная основа Apple Liquid Glass: малая плотность, сильный блюр и перелив света */
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.015) 50%, rgba(255, 255, 255, 0.05) 100%);
             backdrop-filter: blur(40px) saturate(220%);
             -webkit-backdrop-filter: blur(40px) saturate(220%);
             border: 1px solid rgba(255, 255, 255, 0.22);
             
-            /* Желейные объемные блики по краям */
             box-shadow: 
                 0 35px 80px rgba(0, 0, 0, 0.75),
                 inset 0 2px 2px rgba(255, 255, 255, 0.6),
@@ -178,13 +181,48 @@
                 inset -2px 0 3px rgba(255, 255, 255, 0.15);
             
             opacity: 0;
-            transform: translateY(25px) scale(0.95);
-            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: scale(0.9) translateY(30px);
+            transition: opacity 1s var(--ease-liquid), transform 1s var(--ease-liquid);
         }
 
         .container.visible {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            transform: scale(1) translateY(0);
+        }
+
+        /* --- КАСКАДНАЯ АНИМАЦИЯ ЭЛЕМЕНТОВ --- */
+        .title-wrapper,
+        .corner-cross,
+        .link-item,
+        .music-box {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s var(--ease-liquid), transform 0.7s var(--ease-liquid);
+        }
+
+        .container.visible .corner-cross {
+            opacity: 0.3;
+            transform: translateY(0);
+            transition-delay: 0.2s;
+        }
+
+        .container.visible .title-wrapper {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.25s;
+        }
+
+        /* Поочередное всплытие кнопок */
+        .container.visible .link-item:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.35s; }
+        .container.visible .link-item:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.42s; }
+        .container.visible .link-item:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.49s; }
+        .container.visible .link-item:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.56s; }
+        .container.visible .link-item:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 0.63s; }
+
+        .container.visible .music-box {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.72s;
         }
 
         /* Угловые готические кресты */
@@ -225,7 +263,6 @@
             text-shadow: 0 0 14px rgba(255, 255, 255, 0.8);
         }
 
-        /* Заголовок со шрифтом MedievalSharp: классическая острая готика, буква k отчетлива */
         h1 {
             font-family: 'MedievalSharp', cursive;
             font-size: 3.3rem;
@@ -237,7 +274,7 @@
             line-height: 1;
         }
 
-        /* --- СТЕКЛЯННЫЕ КНОПКИ (GRID) --- */
+        /* --- СЕТКА КНОПОК --- */
         .links-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -267,8 +304,12 @@
             box-shadow: 
                 0 6px 18px rgba(0, 0, 0, 0.3),
                 inset 0 1px 1px rgba(255, 255, 255, 0.35);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             overflow: hidden;
+        }
+
+        /* Ховер-эффект кнопок после их появления */
+        .container.visible .link-item {
+            transition: transform 0.3s var(--ease-liquid), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
         }
 
         .link-item.featured {
@@ -288,9 +329,9 @@
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
             border-color: rgba(255, 255, 255, 0.5);
             color: #ffffff;
-            transform: translateY(-2px);
+            transform: translateY(-3px) scale(1.02);
             box-shadow: 
-                0 10px 25px rgba(0, 0, 0, 0.55),
+                0 12px 25px rgba(0, 0, 0, 0.55),
                 0 0 20px rgba(255, 255, 255, 0.18),
                 inset 0 1.5px 2px rgba(255, 255, 255, 0.6);
         }
@@ -471,10 +512,9 @@
 </head>
 <body>
 
-    <!-- Канвас с пеплом/искрами -->
     <canvas id="ashCanvas"></canvas>
 
-    <!-- Экран входа: Стеклянная плашка с крестами и словом тык -->
+    <!-- Экран входа -->
     <div class="enter-screen" id="enterScreen">
         <div class="enter-trigger">
             <span class="side-cross">✠</span>
@@ -483,22 +523,19 @@
         </div>
     </div>
 
-    <!-- Основная карточка профиля (Apple Liquid / Glassmorphism) -->
+    <!-- Основная карточка профиля -->
     <div class="container" id="mainContainer">
-        <!-- Готические угловые кресты -->
         <span class="corner-cross cross-tl">✠</span>
         <span class="corner-cross cross-tr">✠</span>
         <span class="corner-cross cross-bl">✠</span>
         <span class="corner-cross cross-br">✠</span>
 
-        <!-- Заголовок с боковыми акцентными крестами -->
         <div class="title-wrapper">
             <span class="title-cross">♰</span>
             <h1 id="titleName">kamizchuk</h1>
             <span class="title-cross">♰</span>
         </div>
 
-        <!-- Сетка кнопок из жидкого стекла -->
         <div class="links-grid">
             <a href="https://steamcommunity.com/id/kamizchuk/" target="_blank" rel="noopener noreferrer" class="link-item">
                 <i class="fab fa-steam-symbol"></i> Steam
@@ -512,14 +549,11 @@
             <a href="https://discord.com/users/1226305136582856896" target="_blank" rel="noopener noreferrer" class="link-item">
                 <i class="fab fa-discord"></i> Discord
             </a>
-            
-            <!-- Manga по центру внизу сетки -->
             <a href="https://nude-moon.org/perevod/kamizu_kun" target="_blank" rel="noopener noreferrer" class="link-item featured">
                 <i class="fas fa-torii-gate"></i> Manga Translation
             </a>
         </div>
 
-        <!-- Медиаплеер в стеклянной огранке -->
         <div class="music-box">
             <img src="cover.jpg" alt="Cover" class="cover-art" onerror="this.src='https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=200&auto=format&fit=crop'">
             
@@ -579,7 +613,7 @@
         }
         typeTitle();
 
-        // --- 2. ВХОД И АВТОСТАРТ АУДИО ---
+        // --- 2. ПЕРЕХОД ПО КЛИКУ И ПУСК МУЗЫКИ ---
         const enterScreen = document.getElementById('enterScreen');
         const mainContainer = document.getElementById('mainContainer');
         const audio = document.getElementById('audioElement');
@@ -670,7 +704,7 @@
             audio.currentTime = 0;
         });
 
-        // --- 4. МЕДЛЕННО ВОСХОДЯЩИЙ ПЕПЕЛ (ASH PARTICLES) ---
+        // --- 4. МЕДЛЕННО ВОСХОДЯЩИЙ ПЕПЕЛ ---
         const canvas = document.getElementById('ashCanvas');
         const ctx = canvas.getContext('2d');
 
