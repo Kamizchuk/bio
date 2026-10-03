@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kamizu</title>
     
-    <!-- Подключение аутентичного вытянутого готического шрифта Pirata One и антиквы Cinzel -->
+    <!-- Подключение готического шрифта MedievalSharp (вытянутый, строгий, буква k четкая) и Cinzel -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Pirata+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=MedievalSharp&display=swap" rel="stylesheet">
     
     <!-- FontAwesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,7 +21,7 @@
         }
 
         :root {
-            --bg-color: #060608;
+            --bg-color: #040407;
             --text-main: #f5f5f7;
             --text-dim: #8b8b96;
         }
@@ -32,9 +32,9 @@
             min-height: 100dvh;
             background-color: var(--bg-color);
             background-image: 
-                radial-gradient(ellipse at 50% 15%, rgba(60, 60, 80, 0.45) 0%, transparent 60%),
-                radial-gradient(circle at 85% 85%, rgba(35, 35, 50, 0.35) 0%, transparent 55%),
-                radial-gradient(circle at 15% 90%, rgba(30, 30, 45, 0.4) 0%, transparent 50%);
+                radial-gradient(ellipse at 50% 15%, rgba(65, 65, 90, 0.45) 0%, transparent 60%),
+                radial-gradient(circle at 85% 85%, rgba(45, 45, 65, 0.35) 0%, transparent 55%),
+                radial-gradient(circle at 15% 90%, rgba(35, 35, 55, 0.4) 0%, transparent 50%);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -71,7 +71,7 @@
             pointer-events: none;
         }
 
-        /* --- ЭКРАН ВХОДА (Сверхпрозрачное жидкое стекло) --- */
+        /* --- ЭКРАН ВХОДА (Apple Liquid / Glassmorphism) --- */
         .enter-screen {
             position: fixed;
             top: 0;
@@ -82,9 +82,9 @@
             justify-content: center;
             align-items: center;
             z-index: 50;
-            background: rgba(6, 6, 8, 0.35);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: rgba(4, 4, 7, 0.35);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), visibility 1s ease;
             user-select: none;
         }
@@ -99,44 +99,43 @@
             display: inline-flex;
             align-items: center;
             gap: 20px;
-            padding: 14px 40px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 40px;
+            padding: 16px 44px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 999px;
             box-shadow: 
-                0 25px 60px rgba(0, 0, 0, 0.5),
-                inset 0 1px 2px rgba(255, 255, 255, 0.35),
-                inset 0 -1px 2px rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            animation: pulseGlass 3s infinite ease-in-out;
+                0 30px 60px rgba(0, 0, 0, 0.6),
+                inset 0 1px 2px rgba(255, 255, 255, 0.5),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            animation: pulseGlass 3.2s infinite ease-in-out;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .enter-trigger:hover {
-            transform: scale(1.06);
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 100%);
+            border-color: rgba(255, 255, 255, 0.5);
             box-shadow: 
-                0 30px 70px rgba(0, 0, 0, 0.7),
-                0 0 35px rgba(255, 255, 255, 0.15),
-                inset 0 1px 3px rgba(255, 255, 255, 0.5);
+                0 35px 70px rgba(0, 0, 0, 0.7),
+                0 0 35px rgba(255, 255, 255, 0.2),
+                inset 0 1.5px 3px rgba(255, 255, 255, 0.7);
         }
 
         .gothic-btn {
-            font-family: 'Pirata One', cursive;
-            font-size: 3.6rem;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 3.4rem;
             color: var(--text-main);
-            transform: scaleX(0.85); /* Заужение шрифта */
-            letter-spacing: 2px;
+            letter-spacing: 4px;
             text-transform: lowercase;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.35);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
             line-height: 1;
         }
 
         .side-cross {
             font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.65);
             text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
             transition: transform 0.4s ease, color 0.4s ease;
         }
@@ -152,7 +151,7 @@
             50% { transform: scale(1.02); }
         }
 
-        /* --- ОСНОВНАЯ КАРТОЧКА (УЛЬТРАПРОЗРАЧНОЕ СТЕКЛО) --- */
+        /* --- КАРТОЧКА: APPLE LIQUID GLASS (Жидкое стекло с эффектом желе) --- */
         .container {
             position: relative;
             z-index: 10; 
@@ -162,19 +161,21 @@
             width: 90%;
             max-width: 440px;
             padding: 44px 30px;
-            border-radius: 28px;
+            border-radius: 36px;
             
-            /* Сверхпрозрачная задняя стенка для полного обзора фона */
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.005) 50%, rgba(10, 10, 15, 0.04) 100%);
-            backdrop-filter: blur(12px) saturate(140%);
-            -webkit-backdrop-filter: blur(12px) saturate(140%);
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            /* Прозрачная основа Apple Liquid Glass: малая плотность, сильный блюр и перелив света */
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.015) 50%, rgba(255, 255, 255, 0.05) 100%);
+            backdrop-filter: blur(40px) saturate(220%);
+            -webkit-backdrop-filter: blur(40px) saturate(220%);
+            border: 1px solid rgba(255, 255, 255, 0.22);
             
+            /* Желейные объемные блики по краям */
             box-shadow: 
-                0 30px 80px rgba(0, 0, 0, 0.6),
-                inset 0 1.5px 1.5px rgba(255, 255, 255, 0.3),
-                inset 0 -1px 2px rgba(0, 0, 0, 0.35),
-                0 0 40px rgba(255, 255, 255, 0.02);
+                0 35px 80px rgba(0, 0, 0, 0.75),
+                inset 0 2px 2px rgba(255, 255, 255, 0.6),
+                inset 0 -2px 3px rgba(0, 0, 0, 0.4),
+                inset 2px 0 3px rgba(255, 255, 255, 0.15),
+                inset -2px 0 3px rgba(255, 255, 255, 0.15);
             
             opacity: 0;
             transform: translateY(25px) scale(0.95);
@@ -190,30 +191,30 @@
         .corner-cross {
             position: absolute;
             font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.25);
+            color: rgba(255, 255, 255, 0.3);
             user-select: none;
             transition: color 0.3s ease, text-shadow 0.3s ease;
         }
         .container:hover .corner-cross {
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.75);
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
         }
-        .cross-tl { top: 14px; left: 16px; }
-        .cross-tr { top: 14px; right: 16px; }
-        .cross-bl { bottom: 14px; left: 16px; }
-        .cross-br { bottom: 14px; right: 16px; }
+        .cross-tl { top: 16px; left: 18px; }
+        .cross-tr { top: 16px; right: 18px; }
+        .cross-bl { bottom: 16px; left: 18px; }
+        .cross-br { bottom: 16px; right: 18px; }
 
         .title-wrapper {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 14px;
+            gap: 16px;
             margin-bottom: 28px;
         }
 
         .title-cross {
             font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.35);
+            color: rgba(255, 255, 255, 0.4);
             text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
             transition: transform 0.3s ease, color 0.3s ease;
         }
@@ -224,17 +225,14 @@
             text-shadow: 0 0 14px rgba(255, 255, 255, 0.8);
         }
 
-        /* Заголовок со старым готическим стилем (k похожа на R) и заужением в ширину */
+        /* Заголовок со шрифтом MedievalSharp: классическая острая готика, буква k отчетлива */
         h1 {
-            font-family: 'Pirata One', cursive;
-            font-size: 3.6rem;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 3.3rem;
             font-weight: 400;
-            display: inline-block;
-            transform: scaleX(0.85); /* Заужение букв по горизонтали */
-            transform-origin: center;
-            letter-spacing: 2px;
+            letter-spacing: 4px;
             color: #ffffff;
-            text-shadow: 0 4px 18px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 255, 255, 0.3);
+            text-shadow: 0 4px 18px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 255, 255, 0.35);
             user-select: none;
             line-height: 1;
         }
@@ -255,20 +253,20 @@
             justify-content: center;
             gap: 9px;
             padding: 13px 12px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.015) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.16);
             color: #e2e2e8;
             text-decoration: none;
             font-size: 0.82rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             font-weight: 600;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             box-shadow: 
-                0 4px 15px rgba(0, 0, 0, 0.25),
-                inset 0 1px 1px rgba(255, 255, 255, 0.2);
+                0 6px 18px rgba(0, 0, 0, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.35);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             overflow: hidden;
         }
@@ -276,8 +274,8 @@
         .link-item.featured {
             grid-column: span 2;
             padding: 15px 12px;
-            background: rgba(255, 255, 255, 0.035);
-            border-color: rgba(255, 255, 255, 0.18);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-color: rgba(255, 255, 255, 0.24);
         }
 
         .link-item i {
@@ -287,14 +285,14 @@
         }
 
         .link-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.4);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border-color: rgba(255, 255, 255, 0.5);
             color: #ffffff;
             transform: translateY(-2px);
             box-shadow: 
-                0 10px 25px rgba(0, 0, 0, 0.5),
-                0 0 20px rgba(255, 255, 255, 0.12),
-                inset 0 1px 2px rgba(255, 255, 255, 0.4);
+                0 10px 25px rgba(0, 0, 0, 0.55),
+                0 0 20px rgba(255, 255, 255, 0.18),
+                inset 0 1.5px 2px rgba(255, 255, 255, 0.6);
         }
 
         .link-item:hover i {
@@ -308,31 +306,31 @@
             align-items: center;
             gap: 16px;
             width: 100%;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.02);
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.015) 100%);
             padding: 14px 16px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.18);
             box-shadow: 
-                0 8px 24px rgba(0, 0, 0, 0.35),
-                inset 0 1px 1px rgba(255, 255, 255, 0.22);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+                0 10px 26px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(25px) saturate(200%);
+            -webkit-backdrop-filter: blur(25px) saturate(200%);
         }
 
         .cover-art {
             width: 58px;
             height: 58px;
-            border-radius: 12px;
+            border-radius: 16px;
             object-fit: cover;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.35);
             flex-shrink: 0;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .music-box:hover .cover-art {
             transform: scale(1.03);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.7);
         }
 
         .player-controls {
@@ -367,8 +365,8 @@
             -webkit-appearance: none;
             appearance: none;
             height: 11px;
-            width: 5px;
-            border-radius: 2px;
+            width: 6px;
+            border-radius: 3px;
             background: #ffffff;
             margin-top: -4.5px;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
@@ -376,8 +374,8 @@
 
         .slider-common::-moz-range-thumb {
             height: 11px;
-            width: 5px;
-            border-radius: 2px;
+            width: 6px;
+            border-radius: 3px;
             background: #ffffff;
             border: none;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
@@ -386,15 +384,15 @@
         .slider-common::-webkit-slider-runnable-track {
             width: 100%;
             height: 2px;
-            background: rgba(255, 255, 255, 0.16);
-            border-radius: 1px;
+            background: rgba(255, 255, 255, 0.22);
+            border-radius: 2px;
         }
 
         .slider-common::-moz-range-track {
             width: 100%;
             height: 2px;
-            background: rgba(255, 255, 255, 0.16);
-            border-radius: 1px;
+            background: rgba(255, 255, 255, 0.22);
+            border-radius: 2px;
         }
 
         .progress-slider {
@@ -462,11 +460,11 @@
         }
 
         @media (max-width: 480px) {
-            .container { padding: 32px 18px; border-radius: 22px; }
-            h1 { font-size: 3rem; }
+            .container { padding: 32px 18px; border-radius: 26px; }
+            h1 { font-size: 2.8rem; }
             .links-grid { grid-template-columns: 1fr; }
             .link-item.featured { grid-column: span 1; }
-            .gothic-btn { font-size: 3rem; }
+            .gothic-btn { font-size: 2.8rem; }
             .enter-trigger { padding: 12px 28px; gap: 14px; }
         }
     </style>
@@ -485,7 +483,7 @@
         </div>
     </div>
 
-    <!-- Основная карточка профиля (Ультрапрозрачное жидкое стекло) -->
+    <!-- Основная карточка профиля (Apple Liquid / Glassmorphism) -->
     <div class="container" id="mainContainer">
         <!-- Готические угловые кресты -->
         <span class="corner-cross cross-tl">✠</span>
