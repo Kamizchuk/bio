@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kamizu</title>
     
-    <!-- Подключение шрифтов: New Rocker (вытянутая готика с четкой буквой 'k') и Cinzel -->
+    <!-- Подключение аутентичного вытянутого готического шрифта Pirata One и антиквы Cinzel -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=New+Rocker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Pirata+One&display=swap" rel="stylesheet">
     
     <!-- FontAwesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -32,7 +32,7 @@
             min-height: 100dvh;
             background-color: var(--bg-color);
             background-image: 
-                radial-gradient(ellipse at 50% 15%, rgba(60, 60, 80, 0.4) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 15%, rgba(60, 60, 80, 0.45) 0%, transparent 60%),
                 radial-gradient(circle at 85% 85%, rgba(35, 35, 50, 0.35) 0%, transparent 55%),
                 radial-gradient(circle at 15% 90%, rgba(30, 30, 45, 0.4) 0%, transparent 50%);
             display: flex;
@@ -46,7 +46,7 @@
             position: relative;
         }
 
-        /* Тончайшая вуаль */
+        /* Тонкая ретро-вуаль */
         body::before {
             content: " ";
             position: fixed;
@@ -71,7 +71,7 @@
             pointer-events: none;
         }
 
-        /* --- ЭКРАН ВХОДА (Жидкое полупрозрачное стекло) --- */
+        /* --- ЭКРАН ВХОДА (Сверхпрозрачное жидкое стекло) --- */
         .enter-screen {
             position: fixed;
             top: 0;
@@ -82,9 +82,9 @@
             justify-content: center;
             align-items: center;
             z-index: 50;
-            background: rgba(6, 6, 8, 0.65);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            background: rgba(6, 6, 8, 0.35);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), visibility 1s ease;
             user-select: none;
         }
@@ -99,36 +99,36 @@
             display: inline-flex;
             align-items: center;
             gap: 20px;
-            padding: 16px 42px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.22);
+            padding: 14px 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.18);
             border-radius: 40px;
             box-shadow: 
-                0 25px 60px rgba(0, 0, 0, 0.8),
-                inset 0 1px 2px rgba(255, 255, 255, 0.45),
-                inset 0 -1px 2px rgba(0, 0, 0, 0.6),
-                0 0 25px rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(30px) saturate(180%);
-            -webkit-backdrop-filter: blur(30px) saturate(180%);
+                0 25px 60px rgba(0, 0, 0, 0.5),
+                inset 0 1px 2px rgba(255, 255, 255, 0.35),
+                inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             animation: pulseGlass 3s infinite ease-in-out;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .enter-trigger:hover {
             transform: scale(1.06);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.4);
             box-shadow: 
-                0 30px 70px rgba(0, 0, 0, 0.9),
-                0 0 35px rgba(255, 255, 255, 0.25),
-                inset 0 1px 3px rgba(255, 255, 255, 0.6);
+                0 30px 70px rgba(0, 0, 0, 0.7),
+                0 0 35px rgba(255, 255, 255, 0.15),
+                inset 0 1px 3px rgba(255, 255, 255, 0.5);
         }
 
         .gothic-btn {
-            font-family: 'New Rocker', cursive;
-            font-size: 3.4rem;
+            font-family: 'Pirata One', cursive;
+            font-size: 3.6rem;
             color: var(--text-main);
-            letter-spacing: 4px;
+            transform: scaleX(0.85); /* Заужение шрифта */
+            letter-spacing: 2px;
             text-transform: lowercase;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.35);
             line-height: 1;
@@ -152,7 +152,7 @@
             50% { transform: scale(1.02); }
         }
 
-        /* --- ОСНОВНОЙ КОРПУС: СВЕРХПРОЗРАЧНОЕ ЖИДКОЕ СТЕКЛО --- */
+        /* --- ОСНОВНАЯ КАРТОЧКА (УЛЬТРАПРОЗРАЧНОЕ СТЕКЛО) --- */
         .container {
             position: relative;
             z-index: 10; 
@@ -164,16 +164,17 @@
             padding: 44px 30px;
             border-radius: 28px;
             
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 50%, rgba(20, 20, 25, 0.15) 100%);
-            backdrop-filter: blur(35px) saturate(190%);
-            -webkit-backdrop-filter: blur(35px) saturate(190%);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            /* Сверхпрозрачная задняя стенка для полного обзора фона */
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.005) 50%, rgba(10, 10, 15, 0.04) 100%);
+            backdrop-filter: blur(12px) saturate(140%);
+            -webkit-backdrop-filter: blur(12px) saturate(140%);
+            border: 1px solid rgba(255, 255, 255, 0.14);
             
             box-shadow: 
-                0 30px 80px rgba(0, 0, 0, 0.8),
-                inset 0 1.5px 1.5px rgba(255, 255, 255, 0.4),
-                inset 0 -1.5px 2px rgba(0, 0, 0, 0.5),
-                0 0 40px rgba(255, 255, 255, 0.03);
+                0 30px 80px rgba(0, 0, 0, 0.6),
+                inset 0 1.5px 1.5px rgba(255, 255, 255, 0.3),
+                inset 0 -1px 2px rgba(0, 0, 0, 0.35),
+                0 0 40px rgba(255, 255, 255, 0.02);
             
             opacity: 0;
             transform: translateY(25px) scale(0.95);
@@ -206,7 +207,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 16px;
+            gap: 14px;
             margin-bottom: 28px;
         }
 
@@ -223,11 +224,15 @@
             text-shadow: 0 0 14px rgba(255, 255, 255, 0.8);
         }
 
+        /* Заголовок со старым готическим стилем (k похожа на R) и заужением в ширину */
         h1 {
-            font-family: 'New Rocker', cursive;
-            font-size: 3.2rem;
+            font-family: 'Pirata One', cursive;
+            font-size: 3.6rem;
             font-weight: 400;
-            letter-spacing: 3px;
+            display: inline-block;
+            transform: scaleX(0.85); /* Заужение букв по горизонтали */
+            transform-origin: center;
+            letter-spacing: 2px;
             color: #ffffff;
             text-shadow: 0 4px 18px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 255, 255, 0.3);
             user-select: none;
@@ -251,19 +256,19 @@
             gap: 9px;
             padding: 13px 12px;
             border-radius: 14px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: #e2e2e8;
             text-decoration: none;
             font-size: 0.82rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             font-weight: 600;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             box-shadow: 
-                0 4px 15px rgba(0, 0, 0, 0.3),
-                inset 0 1px 1px rgba(255, 255, 255, 0.25);
+                0 4px 15px rgba(0, 0, 0, 0.25),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             overflow: hidden;
         }
@@ -271,8 +276,8 @@
         .link-item.featured {
             grid-column: span 2;
             padding: 15px 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.035);
+            border-color: rgba(255, 255, 255, 0.18);
         }
 
         .link-item i {
@@ -282,14 +287,14 @@
         }
 
         .link-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.4);
             color: #ffffff;
             transform: translateY(-2px);
             box-shadow: 
-                0 10px 25px rgba(0, 0, 0, 0.6),
-                0 0 20px rgba(255, 255, 255, 0.15),
-                inset 0 1px 2px rgba(255, 255, 255, 0.5);
+                0 10px 25px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(255, 255, 255, 0.12),
+                inset 0 1px 2px rgba(255, 255, 255, 0.4);
         }
 
         .link-item:hover i {
@@ -304,17 +309,16 @@
             gap: 16px;
             width: 100%;
             border-radius: 18px;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
             padding: 14px 16px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             box-shadow: 
-                0 8px 24px rgba(0, 0, 0, 0.5),
-                inset 0 1px 1px rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+                0 8px 24px rgba(0, 0, 0, 0.35),
+                inset 0 1px 1px rgba(255, 255, 255, 0.22);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
-        /* Картинка всегда цветная, фильтр обесцвечивания убран */
         .cover-art {
             width: 58px;
             height: 58px;
@@ -322,13 +326,13 @@
             object-fit: cover;
             border: 1px solid rgba(255, 255, 255, 0.3);
             flex-shrink: 0;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .music-box:hover .cover-art {
             transform: scale(1.03);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
         }
 
         .player-controls {
@@ -382,14 +386,14 @@
         .slider-common::-webkit-slider-runnable-track {
             width: 100%;
             height: 2px;
-            background: rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.16);
             border-radius: 1px;
         }
 
         .slider-common::-moz-range-track {
             width: 100%;
             height: 2px;
-            background: rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.16);
             border-radius: 1px;
         }
 
@@ -459,17 +463,17 @@
 
         @media (max-width: 480px) {
             .container { padding: 32px 18px; border-radius: 22px; }
-            h1 { font-size: 2.7rem; }
+            h1 { font-size: 3rem; }
             .links-grid { grid-template-columns: 1fr; }
             .link-item.featured { grid-column: span 1; }
-            .gothic-btn { font-size: 2.8rem; }
+            .gothic-btn { font-size: 3rem; }
             .enter-trigger { padding: 12px 28px; gap: 14px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Канвас с поднимающимся пеплом/искрами -->
+    <!-- Канвас с пеплом/искрами -->
     <canvas id="ashCanvas"></canvas>
 
     <!-- Экран входа: Стеклянная плашка с крестами и словом тык -->
@@ -481,7 +485,7 @@
         </div>
     </div>
 
-    <!-- Основная карточка профиля (Жидкое стекло с крестами) -->
+    <!-- Основная карточка профиля (Ультрапрозрачное жидкое стекло) -->
     <div class="container" id="mainContainer">
         <!-- Готические угловые кресты -->
         <span class="corner-cross cross-tl">✠</span>
