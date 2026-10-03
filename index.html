@@ -21,13 +21,13 @@
         }
 
         :root {
-            --bg-color: #08080a;
-            --card-bg: rgba(14, 14, 18, 0.7);
-            --border-dim: rgba(255, 255, 255, 0.12);
-            --border-glow: rgba(255, 255, 255, 0.6);
-            --text-main: #f0f0f2;
-            --text-dim: #7d7d85;
-            --accent-silver: #d4d4d8;
+            --bg-color: #050507;
+            /* Жидкое стекло: глубокий прозрачный градиент с сиянием по контуру */
+            --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(20, 20, 26, 0.45) 50%, rgba(255, 255, 255, 0.02) 100%);
+            --glass-border: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.2) 100%);
+            --text-main: #f5f5f7;
+            --text-dim: #8b8b96;
+            --silver-glow: rgba(220, 220, 240, 0.4);
         }
 
         body {
@@ -36,8 +36,9 @@
             min-height: 100dvh;
             background-color: var(--bg-color);
             background-image: 
-                radial-gradient(circle at 50% 20%, rgba(35, 35, 45, 0.5) 0%, transparent 60%),
-                radial-gradient(circle at 50% 80%, rgba(15, 15, 20, 0.8) 0%, transparent 70%);
+                radial-gradient(ellipse at 50% 15%, rgba(45, 45, 60, 0.45) 0%, transparent 55%),
+                radial-gradient(circle at 85% 85%, rgba(25, 25, 35, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 15% 90%, rgba(20, 20, 30, 0.5) 0%, transparent 50%);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -49,12 +50,12 @@
             position: relative;
         }
 
-        /* Тончайшая зернистая вуаль */
+        /* Хромированный стеклянный шум */
         body::before {
             content: " ";
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(255, 255, 255, 0.015) 50%, rgba(0, 0, 0, 0.3) 50%);
+            background: linear-gradient(rgba(255, 255, 255, 0.012) 50%, rgba(0, 0, 0, 0.25) 50%);
             background-size: 100% 3px;
             z-index: 2;
             pointer-events: none;
@@ -74,7 +75,7 @@
             pointer-events: none;
         }
 
-        /* --- ЭКРАН ВХОДА --- */
+        /* --- ЭКРАН ВХОДА (Жидкое затемненное стекло) --- */
         .enter-screen {
             position: fixed;
             top: 0;
@@ -85,8 +86,9 @@
             justify-content: center;
             align-items: center;
             z-index: 50;
-            background: rgba(8, 8, 10, 0.85);
-            backdrop-filter: blur(8px);
+            background: radial-gradient(circle, rgba(10, 10, 14, 0.8) 0%, rgba(5, 5, 7, 0.95) 100%);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), visibility 1s ease;
             user-select: none;
         }
@@ -97,29 +99,63 @@
             pointer-events: none;
         }
 
+        .enter-trigger {
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            padding: 16px 36px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 40px;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.7),
+                inset 0 1px 1px rgba(255, 255, 255, 0.3),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            animation: pulseGlass 3s infinite ease-in-out;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .enter-trigger:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 
+                0 25px 60px rgba(0, 0, 0, 0.8),
+                0 0 30px rgba(255, 255, 255, 0.18),
+                inset 0 1px 2px rgba(255, 255, 255, 0.5);
+        }
+
         .gothic-btn {
             font-family: 'Pirata One', cursive;
-            font-size: 4.5rem;
+            font-size: 3.8rem;
             color: var(--text-main);
-            letter-spacing: 6px;
+            letter-spacing: 5px;
             text-transform: lowercase;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            animation: pulseGothic 3s infinite ease-in-out;
-            transition: all 0.4s ease;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.35);
+            line-height: 1;
         }
 
-        .enter-screen:hover .gothic-btn {
-            transform: scale(1.08);
-            letter-spacing: 9px;
-            text-shadow: 0 0 35px rgba(255, 255, 255, 0.8);
+        .side-cross {
+            font-size: 1.6rem;
+            color: rgba(255, 255, 255, 0.55);
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+            transition: transform 0.4s ease, color 0.4s ease;
         }
 
-        @keyframes pulseGothic {
-            0%, 100% { opacity: 0.8; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.03); }
+        .enter-trigger:hover .side-cross {
+            color: #ffffff;
+            transform: scale(1.2);
+            text-shadow: 0 0 18px rgba(255, 255, 255, 0.9);
         }
 
-        /* --- ОСНОВНАЯ КАРТОЧКА --- */
+        @keyframes pulseGlass {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* --- ОСНОВНОЙ КОРПУС: ЖИДКОЕ СТЕКЛО (LIQUID GLASS) --- */
         .container {
             position: relative;
             z-index: 10; 
@@ -128,19 +164,23 @@
             align-items: center;
             width: 90%;
             max-width: 440px;
-            padding: 42px 30px;
+            padding: 44px 30px;
+            border-radius: 28px;
             
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border-dim);
+            background: var(--glass-bg);
+            backdrop-filter: blur(28px) saturate(160%);
+            -webkit-backdrop-filter: blur(28px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            
+            /* Стеклянные блики и глубина */
             box-shadow: 
-                0 0 0 1px rgba(0, 0, 0, 0.8),
-                0 25px 60px rgba(0, 0, 0, 0.8),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+                0 30px 70px rgba(0, 0, 0, 0.85),
+                inset 0 1px 2px rgba(255, 255, 255, 0.35),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(255, 255, 255, 0.03);
             
             opacity: 0;
-            transform: translateY(20px) scale(0.96);
+            transform: translateY(25px) scale(0.95);
             transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -149,38 +189,62 @@
             transform: translateY(0) scale(1);
         }
 
-        /* Двойная тонкая готическая полоса по углам */
-        .container::before, .container::after {
-            content: '';
+        /* Угловые готические кресты вместо простых уголков */
+        .corner-cross {
             position: absolute;
-            width: 8px;
-            height: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            pointer-events: none;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.25);
+            user-select: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
         }
-        .container::before { top: 6px; left: 6px; border-right: none; border-bottom: none; }
-        .container::after { bottom: 6px; right: 6px; border-left: none; border-top: none; }
+        .container:hover .corner-cross {
+            color: rgba(255, 255, 255, 0.6);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        .cross-tl { top: 14px; left: 16px; }
+        .cross-tr { top: 14px; right: 16px; }
+        .cross-bl { bottom: 14px; left: 16px; }
+        .cross-br { bottom: 14px; right: 16px; }
+
+        .title-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .title-cross {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.3);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .title-wrapper:hover .title-cross {
+            color: #ffffff;
+            transform: rotate(90deg);
+            text-shadow: 0 0 14px rgba(255, 255, 255, 0.8);
+        }
 
         h1 {
             font-family: 'Pirata One', cursive;
-            font-size: 3.2rem;
+            font-size: 3.4rem;
             font-weight: 400;
-            margin-bottom: 28px;
             letter-spacing: 4px;
-            text-transform: capitalize;
             color: #ffffff;
-            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.15);
+            text-shadow: 0 4px 18px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 255, 255, 0.25);
             user-select: none;
-            transition: transform 0.2s ease;
+            line-height: 1;
         }
 
-        /* --- СЕТКА КНОПОК (GRID) --- */
+        /* --- ЖИДКИЕ СТЕКЛЯННЫЕ КНОПКИ (GRID) --- */
         .links-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             width: 100%;
-            margin-bottom: 30px;
+            margin-bottom: 26px;
         }
 
         .link-item {
@@ -188,26 +252,31 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 13px 10px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border-dim);
-            color: var(--accent-silver);
+            gap: 9px;
+            padding: 13px 12px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e2e2e8;
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             font-weight: 600;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             overflow: hidden;
         }
 
-        /* Manga на всю ширину снизу */
         .link-item.featured {
             grid-column: span 2;
-            padding: 15px 10px;
-            border-color: rgba(255, 255, 255, 0.22);
-            background: rgba(255, 255, 255, 0.035);
+            padding: 15px 12px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         .link-item i {
@@ -217,11 +286,14 @@
         }
 
         .link-item:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: var(--border-glow);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 100%);
+            border-color: rgba(255, 255, 255, 0.45);
             color: #ffffff;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.6),
+                0 0 20px rgba(255, 255, 255, 0.12),
+                inset 0 1px 2px rgba(255, 255, 255, 0.4);
         }
 
         .link-item:hover i {
@@ -229,29 +301,37 @@
             transform: scale(1.15);
         }
 
-        /* --- МИНИМАЛИСТИЧНЫЙ МЕДИАПЛЕЕР --- */
+        /* --- СТЕКЛЯННЫЙ МЕДИАПЛЕЕР --- */
         .music-box {
             display: flex;
             align-items: center;
             gap: 16px;
             width: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(0, 0, 0, 0.45) 100%);
             padding: 14px 16px;
-            border: 1px solid var(--border-dim);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 
+                0 8px 24px rgba(0, 0, 0, 0.5),
+                inset 0 1px 1px rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         .cover-art {
             width: 58px;
             height: 58px;
+            border-radius: 12px;
             object-fit: cover;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            filter: grayscale(85%) contrast(110%);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            filter: grayscale(80%) contrast(110%);
             flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
             transition: filter 0.4s ease;
         }
 
         .music-box:hover .cover-art {
-            filter: grayscale(40%) contrast(110%);
+            filter: grayscale(20%) contrast(110%);
         }
 
         .player-controls {
@@ -274,7 +354,6 @@
             font-weight: 600;
         }
 
-        /* Слайдеры */
         .slider-common {
             -webkit-appearance: none;
             appearance: none;
@@ -286,31 +365,35 @@
         .slider-common::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            height: 10px;
-            width: 4px;
+            height: 11px;
+            width: 5px;
+            border-radius: 2px;
             background: #ffffff;
-            margin-top: -4px;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+            margin-top: -4.5px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
         }
 
         .slider-common::-moz-range-thumb {
-            height: 10px;
-            width: 4px;
+            height: 11px;
+            width: 5px;
+            border-radius: 2px;
             background: #ffffff;
             border: none;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
         }
 
         .slider-common::-webkit-slider-runnable-track {
             width: 100%;
             height: 2px;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.16);
+            border-radius: 1px;
         }
 
         .slider-common::-moz-range-track {
             width: 100%;
             height: 2px;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.16);
+            border-radius: 1px;
         }
 
         .progress-slider {
@@ -333,7 +416,7 @@
         .play-btn {
             background: none;
             border: none;
-            color: var(--accent-silver);
+            color: #d4d4d8;
             font-size: 0.95rem;
             display: flex;
             align-items: center;
@@ -345,7 +428,7 @@
         
         .play-btn:hover {
             color: #ffffff;
-            transform: scale(1.15);
+            transform: scale(1.18);
         }
 
         .time-text {
@@ -378,11 +461,12 @@
         }
 
         @media (max-width: 480px) {
-            .container { padding: 32px 20px; }
-            h1 { font-size: 2.7rem; }
+            .container { padding: 32px 18px; border-radius: 22px; }
+            h1 { font-size: 2.8rem; }
             .links-grid { grid-template-columns: 1fr; }
             .link-item.featured { grid-column: span 1; }
-            .gothic-btn { font-size: 3.5rem; }
+            .gothic-btn { font-size: 3rem; }
+            .enter-trigger { padding: 12px 26px; gap: 14px; }
         }
     </style>
 </head>
@@ -391,16 +475,31 @@
     <!-- Канвас с поднимающимся пеплом/искрами -->
     <canvas id="ashCanvas"></canvas>
 
-    <!-- Экран входа с готическим текстом *тыкни* -->
+    <!-- Экран входа: Стеклянная плашка с крестами и словом *нажимай* -->
     <div class="enter-screen" id="enterScreen">
-        <div class="gothic-btn">*тыкни*</div>
+        <div class="enter-trigger">
+            <span class="side-cross">✠</span>
+            <div class="gothic-btn">нажимай</div>
+            <span class="side-cross">✠</span>
+        </div>
     </div>
 
-    <!-- Основная карточка профиля -->
+    <!-- Основная карточка профиля (Жидкое стекло с крестами) -->
     <div class="container" id="mainContainer">
-        <h1 id="titleName">kamizchuk</h1>
+        <!-- Готические угловые кресты -->
+        <span class="corner-cross cross-tl">✠</span>
+        <span class="corner-cross cross-tr">✠</span>
+        <span class="corner-cross cross-bl">✠</span>
+        <span class="corner-cross cross-br">✠</span>
 
-        <!-- Новая сетка кнопок -->
+        <!-- Заголовок с боковыми акцентными крестами -->
+        <div class="title-wrapper">
+            <span class="title-cross">♰</span>
+            <h1 id="titleName">kamizchuk</h1>
+            <span class="title-cross">♰</span>
+        </div>
+
+        <!-- Сетка кнопок из жидкого стекла -->
         <div class="links-grid">
             <a href="https://steamcommunity.com/id/kamizchuk/" target="_blank" rel="noopener noreferrer" class="link-item">
                 <i class="fab fa-steam-symbol"></i> Steam
@@ -421,7 +520,7 @@
             </a>
         </div>
 
-        <!-- Медиаплеер -->
+        <!-- Медиаплеер в стеклянной огранке -->
         <div class="music-box">
             <img src="cover.jpg" alt="Cover" class="cover-art" onerror="this.src='https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=200&auto=format&fit=crop'">
             
