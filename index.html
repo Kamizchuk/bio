@@ -164,7 +164,6 @@
             padding: 44px 30px;
             border-radius: 28px;
             
-            /* Настоящее жидкое стекло: чистая прозрачность, сильный блюр и яркие световые срезы */
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 50%, rgba(20, 20, 25, 0.15) 100%);
             backdrop-filter: blur(35px) saturate(190%);
             -webkit-backdrop-filter: blur(35px) saturate(190%);
@@ -315,20 +314,21 @@
             -webkit-backdrop-filter: blur(15px);
         }
 
+        /* Картинка всегда цветная, фильтр обесцвечивания убран */
         .cover-art {
             width: 58px;
             height: 58px;
             border-radius: 12px;
             object-fit: cover;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            filter: grayscale(80%) contrast(110%);
             flex-shrink: 0;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-            transition: filter 0.4s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .music-box:hover .cover-art {
-            filter: grayscale(20%) contrast(110%);
+            transform: scale(1.03);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8);
         }
 
         .player-controls {
@@ -472,7 +472,7 @@
     <!-- Канвас с поднимающимся пеплом/искрами -->
     <canvas id="ashCanvas"></canvas>
 
-    <!-- Экран входа: Стеклянная плашка с крестами и словом *тык* -->
+    <!-- Экран входа: Стеклянная плашка с крестами и словом тык -->
     <div class="enter-screen" id="enterScreen">
         <div class="enter-trigger">
             <span class="side-cross">✠</span>
