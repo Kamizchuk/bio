@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kamizu</title>
     
-    <!-- Пиксельные шрифты -->
+    <!-- Подключение шрифтов: Press Start 2P, VT323, Silkscreen и готический UnifrakturMaguntia -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&family=UnifrakturMaguntia&family=VT323&display=swap" rel="stylesheet">
     
     <!-- FontAwesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -79,11 +79,11 @@
             width: 100%;
             height: 100%;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 50;
             transition: opacity 0.8s ease, visibility 0.8s ease;
+            user-select: none;
         }
 
         .enter-screen.hidden {
@@ -92,41 +92,26 @@
             pointer-events: none;
         }
 
-        .enter-logo-wrapper {
-            position: relative;
-            animation: pulseIntro 2s infinite ease-in-out;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 18px;
+        /* Готический стиль для надписи *тыкни* */
+        .gothic-btn {
+            font-family: 'UnifrakturMaguntia', cursive;
+            font-size: 3.5rem;
+            color: #ff69b4;
+            letter-spacing: 4px;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.7), 0 0 30px rgba(255, 105, 180, 0.4);
+            animation: pulseGothic 2.5s infinite ease-in-out;
+            transition: transform 0.3s ease, text-shadow 0.3s ease, color 0.3s ease;
         }
 
-        .enter-img {
-            width: 110px;
-            height: 110px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 2px solid #ff69b4;
-            box-shadow: 0 0 25px rgba(255, 105, 180, 0.6);
-            transition: transform 0.3s ease;
-        }
-
-        .enter-screen:hover .enter-img {
-            transform: scale(1.08);
-            box-shadow: 0 0 35px rgba(255, 105, 180, 0.9);
-        }
-
-        .enter-hint {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.75rem;
+        .enter-screen:hover .gothic-btn {
+            transform: scale(1.1);
             color: #ffb6c1;
-            letter-spacing: 2px;
-            text-shadow: 0 0 8px rgba(255, 105, 180, 0.7);
+            text-shadow: 0 0 20px rgba(255, 105, 180, 1), 0 0 40px rgba(255, 105, 180, 0.7);
         }
 
-        @keyframes pulseIntro {
+        @keyframes pulseGothic {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
+            50% { transform: scale(1.04); }
         }
 
         /* --- ОСНОВНОЙ КОНТЕЙНЕР --- */
@@ -218,11 +203,16 @@
             color: #fff;
             text-decoration: none;
             font-size: 1.5rem;
+            font-family: 'VT323', monospace;
             transition: all 0.25s ease;
             user-select: none;
         }
 
-        .link-item i { transition: transform 0.3s ease, color 0.3s ease; }
+        .link-item i { 
+            transition: transform 0.3s ease, color 0.3s ease; 
+            width: 24px;
+            text-align: center;
+        }
 
         .link-item:hover {
             background: rgba(255, 105, 180, 0.15);
@@ -394,6 +384,7 @@
             .container { padding: 30px 18px; }
             h1 { font-size: 1.15rem; }
             .link-item { font-size: 1.3rem; padding: 12px; }
+            .gothic-btn { font-size: 2.8rem; }
             .music-box { flex-direction: column; align-items: center; }
             .player-controls { width: 100%; }
             .cover-art { width: 80px; height: 80px; }
@@ -404,12 +395,9 @@
 
     <canvas id="rainCanvas"></canvas>
 
-    <!-- Экран входа с картинкой -->
+    <!-- Экран входа с готической кнопкой *тыкни* -->
     <div class="enter-screen" id="enterScreen">
-        <div class="enter-logo-wrapper">
-            <img src="avatar.png" alt="Enter" class="enter-img" onerror="this.src='https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=200&auto=format&fit=crop'">
-            <div class="enter-hint">[ CLICK TO ENTER ]</div>
-        </div>
+        <div class="gothic-btn">*тыкни*</div>
     </div>
 
     <!-- Основная плашка сайта -->
@@ -426,11 +414,12 @@
             <a href="https://youtube.com/@kamizchuk?si=OacBrP33uK_nkmfv" target="_blank" rel="noopener noreferrer" class="link-item">
                 <i class="fab fa-youtube"></i> YouTube
             </a>
-            <a href="https://discord.com/users/1554065085469556766" target="_blank" rel="noopener noreferrer" class="link-item">
+            <!-- Обновленный Discord ID -->
+            <a href="https://discord.com/users/1226305136582856896" target="_blank" rel="noopener noreferrer" class="link-item">
                 <i class="fab fa-discord"></i> Discord
             </a>
             <a href="https://nude-moon.org/perevod/kamizu_kun" target="_blank" rel="noopener noreferrer" class="link-item">
-                <i class="fas fa-book-open"></i> Перевод манг
+                <i class="fas fa-scroll"></i> Manga
             </a>
         </div>
 
