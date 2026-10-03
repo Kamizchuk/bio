@@ -5,22 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kamizu</title>
     
-    <!-- Вытянутый готический шрифт (Pirata One) и утонченная антиква (Cinzel) -->
+    <!-- Подключение шрифтов: New Rocker (вытянутая готика с четкой буквой 'k') и Cinzel -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Pirata+One&display=swap" rel="stylesheet">
-    
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>kamizu</title>
-    
-    <!-- Вытянутый готический шрифт (Pirata One) и утонченная антиква (Cinzel) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Pirata+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=New+Rocker&display=swap" rel="stylesheet">
     
     <!-- FontAwesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -33,13 +21,9 @@
         }
 
         :root {
-            --bg-color: #050507;
-            /* Жидкое стекло: глубокий прозрачный градиент с сиянием по контуру */
-            --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(20, 20, 26, 0.45) 50%, rgba(255, 255, 255, 0.02) 100%);
-            --glass-border: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.2) 100%);
+            --bg-color: #060608;
             --text-main: #f5f5f7;
             --text-dim: #8b8b96;
-            --silver-glow: rgba(220, 220, 240, 0.4);
         }
 
         body {
@@ -48,9 +32,9 @@
             min-height: 100dvh;
             background-color: var(--bg-color);
             background-image: 
-                radial-gradient(ellipse at 50% 15%, rgba(45, 45, 60, 0.45) 0%, transparent 55%),
-                radial-gradient(circle at 85% 85%, rgba(25, 25, 35, 0.4) 0%, transparent 50%),
-                radial-gradient(circle at 15% 90%, rgba(20, 20, 30, 0.5) 0%, transparent 50%);
+                radial-gradient(ellipse at 50% 15%, rgba(60, 60, 80, 0.4) 0%, transparent 60%),
+                radial-gradient(circle at 85% 85%, rgba(35, 35, 50, 0.35) 0%, transparent 55%),
+                radial-gradient(circle at 15% 90%, rgba(30, 30, 45, 0.4) 0%, transparent 50%);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -62,7 +46,7 @@
             position: relative;
         }
 
-        /* Хромированный стеклянный шум */
+        /* Тончайшая вуаль */
         body::before {
             content: " ";
             position: fixed;
@@ -87,7 +71,7 @@
             pointer-events: none;
         }
 
-        /* --- ЭКРАН ВХОДА (Жидкое затемненное стекло) --- */
+        /* --- ЭКРАН ВХОДА (Жидкое полупрозрачное стекло) --- */
         .enter-screen {
             position: fixed;
             top: 0;
@@ -98,9 +82,9 @@
             justify-content: center;
             align-items: center;
             z-index: 50;
-            background: radial-gradient(circle, rgba(10, 10, 14, 0.8) 0%, rgba(5, 5, 7, 0.95) 100%);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(6, 6, 8, 0.65);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), visibility 1s ease;
             user-select: none;
         }
@@ -115,43 +99,44 @@
             display: inline-flex;
             align-items: center;
             gap: 20px;
-            padding: 16px 36px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 16px 42px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.22);
             border-radius: 40px;
             box-shadow: 
-                0 20px 50px rgba(0, 0, 0, 0.7),
-                inset 0 1px 1px rgba(255, 255, 255, 0.3),
-                inset 0 -1px 1px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+                0 25px 60px rgba(0, 0, 0, 0.8),
+                inset 0 1px 2px rgba(255, 255, 255, 0.45),
+                inset 0 -1px 2px rgba(0, 0, 0, 0.6),
+                0 0 25px rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
             animation: pulseGlass 3s infinite ease-in-out;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .enter-trigger:hover {
-            transform: scale(1.05);
-            background: rgba(255, 255, 255, 0.07);
-            border-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.06);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.5);
             box-shadow: 
-                0 25px 60px rgba(0, 0, 0, 0.8),
-                0 0 30px rgba(255, 255, 255, 0.18),
-                inset 0 1px 2px rgba(255, 255, 255, 0.5);
+                0 30px 70px rgba(0, 0, 0, 0.9),
+                0 0 35px rgba(255, 255, 255, 0.25),
+                inset 0 1px 3px rgba(255, 255, 255, 0.6);
         }
 
         .gothic-btn {
-            font-family: 'Pirata One', cursive;
-            font-size: 3.8rem;
+            font-family: 'New Rocker', cursive;
+            font-size: 3.4rem;
             color: var(--text-main);
-            letter-spacing: 5px;
+            letter-spacing: 4px;
             text-transform: lowercase;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.35);
             line-height: 1;
         }
 
         .side-cross {
-            font-size: 1.6rem;
-            color: rgba(255, 255, 255, 0.55);
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.6);
             text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
             transition: transform 0.4s ease, color 0.4s ease;
         }
@@ -167,7 +152,7 @@
             50% { transform: scale(1.02); }
         }
 
-        /* --- ОСНОВНОЙ КОРПУС: ЖИДКОЕ СТЕКЛО (LIQUID GLASS) --- */
+        /* --- ОСНОВНОЙ КОРПУС: СВЕРХПРОЗРАЧНОЕ ЖИДКОЕ СТЕКЛО --- */
         .container {
             position: relative;
             z-index: 10; 
@@ -179,17 +164,17 @@
             padding: 44px 30px;
             border-radius: 28px;
             
-            background: var(--glass-bg);
-            backdrop-filter: blur(28px) saturate(160%);
-            -webkit-backdrop-filter: blur(28px) saturate(160%);
-            border: 1px solid rgba(255, 255, 255, 0.16);
+            /* Настоящее жидкое стекло: чистая прозрачность, сильный блюр и яркие световые срезы */
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 50%, rgba(20, 20, 25, 0.15) 100%);
+            backdrop-filter: blur(35px) saturate(190%);
+            -webkit-backdrop-filter: blur(35px) saturate(190%);
+            border: 1px solid rgba(255, 255, 255, 0.18);
             
-            /* Стеклянные блики и глубина */
             box-shadow: 
-                0 30px 70px rgba(0, 0, 0, 0.85),
-                inset 0 1px 2px rgba(255, 255, 255, 0.35),
-                inset 0 -2px 4px rgba(0, 0, 0, 0.5),
-                0 0 30px rgba(255, 255, 255, 0.03);
+                0 30px 80px rgba(0, 0, 0, 0.8),
+                inset 0 1.5px 1.5px rgba(255, 255, 255, 0.4),
+                inset 0 -1.5px 2px rgba(0, 0, 0, 0.5),
+                0 0 40px rgba(255, 255, 255, 0.03);
             
             opacity: 0;
             transform: translateY(25px) scale(0.95);
@@ -201,7 +186,7 @@
             transform: translateY(0) scale(1);
         }
 
-        /* Угловые готические кресты вместо простых уголков */
+        /* Угловые готические кресты */
         .corner-cross {
             position: absolute;
             font-size: 0.85rem;
@@ -210,8 +195,8 @@
             transition: color 0.3s ease, text-shadow 0.3s ease;
         }
         .container:hover .corner-cross {
-            color: rgba(255, 255, 255, 0.6);
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.7);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
         }
         .cross-tl { top: 14px; left: 16px; }
         .cross-tr { top: 14px; right: 16px; }
@@ -228,7 +213,7 @@
 
         .title-cross {
             font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.35);
             text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
             transition: transform 0.3s ease, color 0.3s ease;
         }
@@ -240,17 +225,17 @@
         }
 
         h1 {
-            font-family: 'Pirata One', cursive;
-            font-size: 3.4rem;
+            font-family: 'New Rocker', cursive;
+            font-size: 3.2rem;
             font-weight: 400;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             color: #ffffff;
-            text-shadow: 0 4px 18px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 255, 255, 0.25);
+            text-shadow: 0 4px 18px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 255, 255, 0.3);
             user-select: none;
             line-height: 1;
         }
 
-        /* --- ЖИДКИЕ СТЕКЛЯННЫЕ КНОПКИ (GRID) --- */
+        /* --- СТЕКЛЯННЫЕ КНОПКИ (GRID) --- */
         .links-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -267,19 +252,19 @@
             gap: 9px;
             padding: 13px 12px;
             border-radius: 14px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             color: #e2e2e8;
             text-decoration: none;
             font-size: 0.82rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             font-weight: 600;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             box-shadow: 
-                0 4px 15px rgba(0, 0, 0, 0.4),
-                inset 0 1px 1px rgba(255, 255, 255, 0.2);
+                0 4px 15px rgba(0, 0, 0, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.25);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             overflow: hidden;
         }
@@ -287,8 +272,8 @@
         .link-item.featured {
             grid-column: span 2;
             padding: 15px 12px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.22);
         }
 
         .link-item i {
@@ -298,14 +283,14 @@
         }
 
         .link-item:hover {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 100%);
-            border-color: rgba(255, 255, 255, 0.45);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
             color: #ffffff;
             transform: translateY(-2px);
             box-shadow: 
                 0 10px 25px rgba(0, 0, 0, 0.6),
-                0 0 20px rgba(255, 255, 255, 0.12),
-                inset 0 1px 2px rgba(255, 255, 255, 0.4);
+                0 0 20px rgba(255, 255, 255, 0.15),
+                inset 0 1px 2px rgba(255, 255, 255, 0.5);
         }
 
         .link-item:hover i {
@@ -320,14 +305,14 @@
             gap: 16px;
             width: 100%;
             border-radius: 18px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(0, 0, 0, 0.45) 100%);
+            background: rgba(255, 255, 255, 0.03);
             padding: 14px 16px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 
                 0 8px 24px rgba(0, 0, 0, 0.5),
-                inset 0 1px 1px rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+                inset 0 1px 1px rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
         }
 
         .cover-art {
@@ -335,7 +320,7 @@
             height: 58px;
             border-radius: 12px;
             object-fit: cover;
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             filter: grayscale(80%) contrast(110%);
             flex-shrink: 0;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
@@ -397,14 +382,14 @@
         .slider-common::-webkit-slider-runnable-track {
             width: 100%;
             height: 2px;
-            background: rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.18);
             border-radius: 1px;
         }
 
         .slider-common::-moz-range-track {
             width: 100%;
             height: 2px;
-            background: rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.18);
             border-radius: 1px;
         }
 
@@ -474,11 +459,11 @@
 
         @media (max-width: 480px) {
             .container { padding: 32px 18px; border-radius: 22px; }
-            h1 { font-size: 2.8rem; }
+            h1 { font-size: 2.7rem; }
             .links-grid { grid-template-columns: 1fr; }
             .link-item.featured { grid-column: span 1; }
-            .gothic-btn { font-size: 3rem; }
-            .enter-trigger { padding: 12px 26px; gap: 14px; }
+            .gothic-btn { font-size: 2.8rem; }
+            .enter-trigger { padding: 12px 28px; gap: 14px; }
         }
     </style>
 </head>
@@ -487,11 +472,11 @@
     <!-- Канвас с поднимающимся пеплом/искрами -->
     <canvas id="ashCanvas"></canvas>
 
-    <!-- Экран входа: Стеклянная плашка с крестами и словом *нажимай* -->
+    <!-- Экран входа: Стеклянная плашка с крестами и словом *тык* -->
     <div class="enter-screen" id="enterScreen">
         <div class="enter-trigger">
             <span class="side-cross">✠</span>
-            <div class="gothic-btn">нажимай</div>
+            <div class="gothic-btn">тык</div>
             <span class="side-cross">✠</span>
         </div>
     </div>
